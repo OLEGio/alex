@@ -1,0 +1,4 @@
+<%= form_tag result_reports_path, method: :post %>
+  Select user:
+  <%= select_tag :user_id, options_from_collection_for_select(@users_list, :id, :name) %>
+  <%= submit_tag :go! %>

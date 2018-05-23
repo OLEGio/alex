@@ -1,0 +1,5 @@
+<% @users.each do |user| %>
+  <%= "#{user.name} #{user.amount} #{user.grade.grade}<br>".html_safe %>
+<% end %>
+
+<%= link_to 'Create user', new_user_path %>

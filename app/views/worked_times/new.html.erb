@@ -1,0 +1,10 @@
+<h1>Create worked time</h1>
+<%= form_for @worked_time do |f| %>
+  Select user:
+  <%= f.select  :user_id, @users_list %>
+  <br> Start date:
+  <%= f.date_select  :start_date %>
+  <br> End date:
+  <%= f.date_select  :end_date %>
+  <%= f.submit  :save %>
+<% end %>

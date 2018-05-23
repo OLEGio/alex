@@ -1,0 +1,5 @@
+<% @worked_times.each do |work_time| %>
+  <%= "#{work_time.user.name} #{work_time.start_date} #{work_time.end_date}<br>".html_safe %>
+<% end %>
+
+<%= link_to 'Work time create', new_worked_time_path %>

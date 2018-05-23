@@ -1,0 +1,7 @@
+<h1>Create user</h1>
+<%= form_for @user do |f| %>
+  <%= f.text_field  :name %>
+  <%= f.select  :grade_id, @grades_list  %>
+  <%= f.text_field  :amount %>
+  <%= f.submit  :Save %>
+<% end %>
