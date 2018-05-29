@@ -1,32 +1,58 @@
 module Api
-    module V1
-      class ReportsController < ApiController
-        def index
-          # @users_list = User.all
-        end
+  module V1
+    class ReportsController < ApiController
+      def index
+        # @users_list = User.all
+      end
 
-        def result
-          @user = User.find(params[:user_id])
-          @sum = 0.0
-          @user.worked_times.each do |work_time|
-            @sum += (work_time.end_date - work_time.start_date).to_i * @user.amount * @user.grade.rate
+      def result
+        @user = User.find(params[:user_id])
+        @sum = 0.0
+        @user.worked_times.each do |work_time|
+          @sum += (work_time.end_date - work_time.start_date).to_i * @user.amount * @user.grade.rate
+        end
+        render json: {sum: @sum}
+      end
+
+      def result_total
+        @users = User.all
+        @sum = 0.0
+        @users.each do |user|
+          user.worked_times.each do |work_time|
+            @sum += (work_time.end_date - work_time.start_date).to_i * user.amount * user.grade.rate
           end
-          render json: { sum: @sum }
         end
 
-        def result_total
-          @users = User.all
-          @sum = 0.0
-          @users.each do |user|
-            user.worked_times.each do |work_time|
-              @sum += (work_time.end_date - work_time.start_date).to_i * user.amount * user.grade.rate
-            end
+        render json: {sum: @sum}
+      end
+
+
+      def lol
+        month = params[:month]
+        year = params[:year]
+        begining = DateTime.parse("#{month} #{year}")
+        ending = begining.end_of_month
+        worked_times = WorkedTime.where('(start_date < ? or start_date < ?) and (end_date > ? or end_date > ?)',
+                                        begining, ending, begining, ending).all
+
+        amounts = []
+        worked_times.each do |worked_time|
+          days_count = (Array(worked_time.start_date..worked_time.end_date) & Array(begining..ending)).count
+          amount = worked_time.user.amount * worked_time.user.grade.rate * days_count
+
+          finded_amount = amounts.find {|a| a[:user_name] == worked_time.user.name}
+
+          if finded_amount.present?
+            finded_amount[:amount] = finded_amount[:amount] + amount
+          else
+            amounts << {user_name: worked_time.user.name, amount: amount}
           end
-
-           render json: { sum: @sum }
         end
+
+        render json: amounts
       end
     end
+  end
 end
 
 
