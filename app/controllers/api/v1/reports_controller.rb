@@ -14,6 +14,13 @@ module Api
         render json: {sum: @sum}
       end
 
+      def result_inject
+        @user = User.find(params[:user_id])
+        @sum = 0.0
+        @sum= @user.worked_times.inject(0) {|sum, work_time| sum +(work_time.end_date - work_time.start_date).to_i*@user.amount * @user.grade.rate}
+        render json: {sum: @sum}
+      end
+
       def result_total
         @users = User.all
         @sum = 0.0
@@ -26,8 +33,16 @@ module Api
         render json: {sum: @sum}
       end
 
+    def result_total_inject
+      @users = User.all
+      @sum = 0.0
+      @sum= @users.inject(0){|summ,user| summ +user.worked_times.inject(0) {|days, work_time| days +(work_time.end_date - work_time.start_date).to_i*user.amount * user.grade.rate}}
 
-      def report_monthly
+      render json: {sum: @sum}
+    end
+
+
+    def report_monthly
         month = params[:month]
         year = params[:year]
         begining = DateTime.parse("#{month} #{year}")

@@ -32,9 +32,12 @@ Rails.application.routes.draw do
       end
 
       post '/result/:user_id' => 'reports#result'
+      post '/result_inject/:user_id' => 'reports#result_inject'
       post '/result_total' => 'reports#result_total'
-      post '/report_monthly_by_one' => 'reports#report_monthly_by_one'
+      post '/result_total_inject' => 'reports#result_total_inject'
       post '/report_monthly' => 'reports#report_monthly'
+      post '/report_monthly_by_one' => 'reports#report_monthly_by_one'
+      post '/result_total_inject' => 'reports#result_total_inject'
     end
   end
 end
