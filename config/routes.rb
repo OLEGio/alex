@@ -33,7 +33,8 @@ Rails.application.routes.draw do
 
       post '/result/:user_id' => 'reports#result'
       post '/result_total' => 'reports#result_total'
-      post '/lol' => 'reports#lol'
+      post '/report_monthly_by_one' => 'reports#report_monthly_by_one'
+      post '/report_monthly' => 'reports#report_monthly'
     end
   end
 end

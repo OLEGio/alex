@@ -27,7 +27,7 @@ module Api
       end
 
 
-      def lol
+      def report_monthly
         month = params[:month]
         year = params[:year]
         begining = DateTime.parse("#{month} #{year}")
@@ -52,7 +52,7 @@ module Api
         render json: amounts
       end
 
-      def lol_by_one
+      def report_monthly_by_one
         month = params[:month]
         year = params[:year]
         user_name = params[:name]
